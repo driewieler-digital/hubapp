@@ -1,0 +1,17 @@
+.thumbnail-default {
+	background-color:transparent;
+	height:90px;
+	text-align:center;
+	border-radius:2px;
+}
+
+.thumbnail-default:hover {
+	background-color:rgba(255,255,255,0.5);
+}
+
+a, a:hover {
+
+text-decoration:none;
+color:#333333;
+}
+

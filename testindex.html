@@ -1,0 +1,99 @@
+<html>
+<head>
+
+	<!-- libs & frameworks -->
+	<script type="text/javascript" src="lib/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="lib/underscore-min.js"></script>
+	<script type="text/javascript" src="lib/backbone-min.js"></script>
+	<script type="text/javascript" src="lib/handlebars-v3.0.0.js"></script>
+	
+	<!-- bootstrap css -->
+	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">	
+
+	<!-- custom js -->
+	<script type="text/javascript" src="js/config.js"></script>
+	<script type="text/javascript" src="js/hubRouter.js"></script>	
+	<script type="text/javascript" src="js/views/gridview.js"></script>
+	<script type="text/javascript" src="js/views/detailview.js"></script>	
+	<script type="text/javascript" src="js/views/navbarview.js"></script>		
+	<script type="text/javascript" src="js/app.js"></script>				
+	<!-- custom css -->
+	<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<!-- --== View Templates ==-- -->
+
+<!-- Navbar View Template -->
+<script id="navbarview-template" type="text/x-handlebars-template" >
+
+<nav class="navbar navbar-default navbar-top">
+  <div class="container-fluid">
+	
+	<h4>
+		{{#if backbutton}}
+			<a href="#">
+				<span class="glyphicon glyphicon-chevron-left" style="font-size:14px;"></span>
+				{{ data.name }} 
+			</a>
+		{{else}}
+			{{ data.name }} 		
+		{{/if}}	
+
+	</h4>	
+  </div>
+
+</nav>
+</script>
+
+<!-- Grid View Template. uses bootstrap for layout -->
+<script id="gridview-template" type="text/x-handlebars-template" >
+<div class="container jumbotron">
+	<div class="row">
+
+	{{#each data.arr}}
+		<a href="#detail/{{id}}">
+			<div id = "{{id}}" class="col-xs-4 col-md-2 thumbnail-default">
+				{{ name }} 
+			</div>
+		</a>
+	{{/each}}
+
+	</div>
+</div>
+</script>
+
+<!-- Detail View Template -->
+<script id="detailview-template" type="text/x-handlebars-template" >
+<div class="container jumbotron">
+	{{ data.name }} <br><br> 
+	<a href="tel:{{data.phone}}">
+		<span class="glyphicon glyphicon-earphone"></span> {{ data.phone }} 
+	</a>
+</div>
+</script>
+
+
+<!-- --== View Containers ==-- -->
+
+<!-- container for navbar -->
+<div id="navbarview"></div>
+
+<!-- container for gridview -->
+<div id="gridview"></div>
+
+<!-- container for detailview -->
+<div id="detailview" style="display:none;"></div>
+
+
+<!-- --== Initialization ==-- -->
+<script type="text/javascript">
+	$(document).ready(function() {	
+		app.initialize();
+	});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+        
+        <title>Hub</title>
+
+        <script type="text/javascript" src="cordova.js"></script>
+        
+		<!-- libs & frameworks -->
+		<script type="text/javascript" src="lib/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="lib/underscore-min.js"></script>
+		<script type="text/javascript" src="lib/backbone-min.js"></script>
+		<script type="text/javascript" src="lib/handlebars-v3.0.0.js"></script>
+		
+		<script type="text/javascript" src="lib/fastclick.js"></script>		
+	
+		<!-- bootstrap css -->
+		<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">	
+
+		<!-- custom js -->
+		<script type="text/javascript" src="js/config.js"></script>
+		<script type="text/javascript" src="js/hubRouter.js"></script>	
+		<script type="text/javascript" src="js/views/gridview.js"></script>
+		<script type="text/javascript" src="js/views/detailview.js"></script>	
+		<script type="text/javascript" src="js/views/navbarview.js"></script>		
+		<script type="text/javascript" src="js/app.js"></script>				
+		<!-- custom css -->
+		<link rel="stylesheet" href="css/style.css">  
+        
+    </head>
+    <body>
+
+
+	<!-- --== View Templates ==-- -->
+
+	<!-- Navbar View Template -->
+	<script id="navbarview-template" type="text/x-handlebars-template" >
+
+	<nav class="navbar navbar-default navbar-top">
+	  <div class="container-fluid">
+	
+		<h4>
+			{{#if backbutton}}
+				<a href="#">
+					<span class="glyphicon glyphicon-chevron-left" style="font-size:14px;"></span>
+					{{ data.name }} 
+				</a>
+			{{else}}
+				{{ data.name }} 		
+			{{/if}}	
+
+		</h4>	
+	  </div>
+
+	</nav>
+	</script>
+
+	<!-- Grid View Template. uses bootstrap for layout -->
+	<script id="gridview-template" type="text/x-handlebars-template" >
+	<div class="container jumbotron">
+		<div class="row">
+
+		{{#each data.arr}}
+			<a href="#detail/{{id}}">
+				<div id = "{{id}}" class="col-xs-4 col-md-2 thumbnail-default">
+					{{ name }} 
+				</div>
+			</a>
+		{{/each}}
+
+		</div>
+	</div>
+	</script>
+
+	<!-- Detail View Template -->
+	<script id="detailview-template" type="text/x-handlebars-template" >
+	<div class="container jumbotron">
+		{{ data.name }} <br><br> 
+		
+		<a href="tel:{{data.phone}}">
+			<span class="glyphicon glyphicon-earphone"></span> {{ data.phone }} 
+		</a>		
+		
+	</div>
+	</script>
+
+
+	<!-- --== View Containers ==-- -->
+
+	<!-- container for navbar -->
+	<div id="navbarview"></div>
+
+	<!-- container for gridview -->
+	<div id="gridview"></div>
+
+	<!-- container for detailview -->
+	<div id="detailview" style="display:none;"></div>
+
+
+	<!-- --== Initialization ==-- -->
+	<script type="text/javascript">
+		document.addEventListener('deviceready', function() {	
+
+			// register fastclick to get rid of the 300ms delay
+			$(function() {
+				FastClick.attach(document.body);
+				//alert('a');					
+			});		
+
+		if (document.documentElement.hasOwnProperty('ontouchstart')) {
+			// ... if yes: register touch event listener to change the "selected" state of the item
+			$('body').on('touchstart', 'a', function(event) {
+				$(event.target).addClass('tappable-active');
+			});
+			$('body').on('touchend', 'a', function(event) {
+				$(event.target).removeClass('tappable-active');
+			});
+			$('body').on('touchmove', 'a', function(event) {
+				$(event.target).removeClass('tappable-active');
+			});		
+			$('body').on('tap', 'a', function(event) {
+				$(event.target).addClass('tappable-active');
+			});		
+									
+		} else {
+			// ... if not: register mouse events instead
+			$('body').on('mousedown', 'a', function(event) {
+				$(event.target).addClass('tappable-active');
+			});
+			$('body').on('mouseup', 'a', function(event) {
+				$(event.target).removeClass('tappable-active');
+			});
+		}
+
+			app.initialize();
+		});
+	</script>
+
+    </body>
+</html>

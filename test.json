@@ -1,0 +1,12 @@
+ { 
+    "arr": [
+      {"id":1, "name": "Sp0ka", "phone": "1342576"},
+      {"id":2, "name": "Bald43r", "phone": "0104707"},
+      {"id":3, "name": "R0s4", "phone": "9540161"},
+      {"id":4, "name": "Sp0ka2", "phone": "1122576"},
+      {"id":5, "name": "Bald43r2", "phone": "0105207"},
+      {"id":6, "name": "R0s42", "phone": "9532161"}      
+    ]
+  }
+  
+
